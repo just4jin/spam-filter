@@ -15,8 +15,9 @@ head(trainSpam)
 table(trainSpam$type)
 #nonspam    spam 
 #1381     906 
-plot(trainSpam$capitalAve~trainSpam$type)# daya highly skewed
-plot(log(trainSpam$capitalAve+1)~trainSpam$type)# spams more cpaitalAve
+
+plot(trainSpam$capitalAve~trainSpam$type)# data highly skewed
+plot(log(trainSpam$capitalAve+1)~trainSpam$type)# spams if more cpaitalAve
 plot(log10(trainSpam[,1:4]+1))# some are not correlated
 hCluster = hclust(dist(t(trainSpam[,1:57])))
 plot(hCluster)
@@ -37,7 +38,7 @@ for (i in 1:55){
 names(trainSpam)[which.min(cvError)] #[1] "charDollar"
 
 ## Use the best model from the group
-predictionModel=glm(numType~charDollar, family="binomial",data=trainSpam)
+predictionModel=glm(numType ~ charDollar, family="binomial",data=trainSpam)
 
 ## get predictions on the test set
 predictionTest=predict(predictionModel , testSpam)
@@ -56,10 +57,7 @@ table(predictedSpam, testSpam$type)
 (61 + 458)/(1346 + 458 +61 +449) # 0.2242869
 
 ## Interpret model
-
 # fraction of characters with dollar signs can be used
 # to predict if an email is Spam
 # > 6.6% dollar signs is classified as Spam
 # test set error rate 22.4% and ~78% test set accuracy
-
-## Challenge results
